@@ -7,27 +7,25 @@ import {
 import express from "express";
 import bodyParser from "body-parser";
 import { ObjectId } from "mongodb";
-import { AddStreamerRequest, Streamer, User, VoteRequest } from "./contract";
+import { AddStreamerRequest, Streamer, VoteRequest, VOTE_TYPES } from "./contract";
 import mongoose, { Connection, Collection } from "mongoose";
+import "dotenv/config";
 
 const app = express();
 app.use(bodyParser.json());
-const MONGO_URL = process.env.MONGO_URL!
+const MONGO_URL = process.env.MONGO_URL!;
 const STREAMERS_COLLECTION_NAME = "streamers";
-const USERS_COLLECTION_NAME = "users"
 
 let db: Connection;
 let streamersCollection: Collection<Streamer>;
-let usersCollection: Collection<User>;
 
 // type DbStreamer = Omit<Streamer, "id"> & { _id: ObjectId };
 
 mongoose
-  .connect(MONGO_URL, {})
+  .connect(MONGO_URL)
   .then(() => {
     db = mongoose.connection;
     streamersCollection = db.collection(STREAMERS_COLLECTION_NAME);
-    usersCollection = db.collection(USERS_COLLECTION_NAME);
     console.log("MongoDB database connected!");
   })
   .catch((err) => {
@@ -58,17 +56,18 @@ export const eraseStreamerVote = async ({
   );
 };
 
-export const registerStreamerVote = async (data: VoteRequest) => {
-  const { sessionId, streamerId, type } = data;
+export const registerStreamerVote = async (payload: VoteRequest) => {
+  const { sessionId, streamerId, type } = payload;
   const [targetArray, otherArray] = mapVoteArrayNames(type);
   const streamer = await findStreamer(streamerId);
   if ((streamer[targetArray] as string[]).includes(sessionId)) {
     await eraseStreamerVote({ sessionId, streamerId, type });
-  } else {
+  }
+  if (!(streamer[targetArray] as string[]).includes(sessionId)) {
     await addStreamerVote({ sessionId, streamerId, type });
   }
   if ((streamer[otherArray] as string[]).includes(sessionId)) {
-    await eraseStreamerVote({ sessionId, streamerId, type });
+    await eraseStreamerVote({ sessionId, streamerId, type: VOTE_TYPES.filter((t) => t !== type).at(0)! });
   }
   const after = await findStreamer(streamerId);
   return {
@@ -77,7 +76,8 @@ export const registerStreamerVote = async (data: VoteRequest) => {
   };
 };
 
-export const listStreamers = async () => (await streamersCollection.find().toArray()).map(fromMongoId);
+export const listStreamers = async () =>
+  (await streamersCollection.find().toArray()).map(fromMongoId);
 
 export const findStreamer = async (id: Streamer["id"]): Promise<Streamer> => {
   const streamer = await streamersCollection.findOne(toMongoId({ id }));
@@ -87,7 +87,9 @@ export const findStreamer = async (id: Streamer["id"]): Promise<Streamer> => {
   return fromMongoId(streamer);
 };
 
-export const insertStreamer = async (data: AddStreamerRequest): Promise<Streamer> => {
+export const insertStreamer = async (
+  data: AddStreamerRequest
+): Promise<Streamer> => {
   const { insertedId } = await streamersCollection.insertOne({
     id: new ObjectId().toHexString(),
     ...data,
@@ -99,13 +101,5 @@ export const insertStreamer = async (data: AddStreamerRequest): Promise<Streamer
     ...data,
     upvotedBy: [],
     downvotedBy: [],
-  }
-}
-
-// export const loginUser = async (username: string, password: string) => {
-//   const user = await usersCollection.findOne({ username, password });
-//   if (!user) {
-//     throw new Error("User not found");
-//   }
-//   return fromMongoId(user).id;
-// }
+  };
+};

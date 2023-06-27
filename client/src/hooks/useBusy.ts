@@ -1,11 +1,13 @@
 import { useState } from 'react';
 
-const useBusy = (initialState = false): [boolean, (callback: () => void) => void] => {
+type CallbackFunction = () => Promise<void>;
+
+const useBusy = (initialState = false): [boolean, (callback: CallbackFunction) => Promise<void>] => {
   const [isBusy, setIsBusy] = useState(initialState);
 
-  const busyWrapper = (callback: () => void): void => {
+  const busyWrapper = async (callback: CallbackFunction) => {
     setIsBusy(true);
-    callback();
+    await callback();
     setIsBusy(false);
   };
 

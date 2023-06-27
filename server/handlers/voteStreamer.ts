@@ -4,19 +4,19 @@ import { voteRequestSchema } from "../schemas";
 import { validateSchema } from "../helpers";
 
 export default async (req: Request, res: Response) => {
-  const { streamerId, sessionId, type } = validateSchema({...req.params, ...req.body}, voteRequestSchema);
+  const { sessionId, streamerId, type } = validateSchema({...req.params, ...req.body}, voteRequestSchema);
 
   try {
     const result = await registerStreamerVote({
-      streamerId,
       sessionId,
+      streamerId,
       type,
     });
 
     if (!result) {
       res.status(404).json({ error: "Streamer not found" });
     } else {
-      res.json(result);
+      res.json(result.after);
     }
   } catch (err) {
     console.error("Failed to update streamer:", err);

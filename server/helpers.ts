@@ -1,4 +1,4 @@
-import { PublicStreamer, Streamer, Vote, VoteNumber } from "./contract";
+import { PublicStreamer, PublicListStreamer, Streamer, Vote, VoteNumber } from "./contract";
 import { ObjectId } from "mongodb";
 import { Schema } from 'joi'
 
@@ -40,10 +40,12 @@ export const pick = <T extends { [key: string]: any }, K extends keyof T>(
   }, {} as Pick<T, K>);
 };
 
-export const toPublicStreamer = (streamer: Streamer): PublicStreamer => ({
-  ...omit((streamer), ["upvotedBy", "downvotedBy"]),
-  ...mapVoteArrayToVoteAmount(streamer),
-});
+export const toPublicStreamer = (streamer: Streamer): PublicStreamer => omit((streamer), ["upvotedBy", "downvotedBy"])
+
+export const toPublicListStreamer = (streamer: Streamer): PublicListStreamer => ({
+  ...pick(streamer, ['id', 'name']),
+  ...mapVoteArrayToVoteAmount(streamer)
+})
 
 export const fromMongoId = <T extends { _id: ObjectId }>(obj: T): Omit<T, '_id'> & { id: string } => {
   const { _id, ...rest } = obj;

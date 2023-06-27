@@ -1,19 +1,21 @@
 import React from 'react';
-import StreamersList from './components/StreamersList/StreamersList';
 import styles from './App.module.scss'
-import StreamerSubmissionForm from './components/StreamerSubmissionForm/StreamerSubmissionForm';
 import StreamerRecord from './components/StreamerRecord/StreamerRecord';
+import Logo from './components/Logo/Logo';
+import Content from './components/Content/Content';
+import { Routes, Route } from 'react-router-dom'
+import Error from './components/Error/Error';
 
-function App() {
-  return (
+const App = () =>
+  <>
+    <Logo />
     <div className={styles.app}>
-      <StreamersList />
-      <div>
-        <StreamerSubmissionForm />
-        <StreamerRecord />
-      </div>
+      <Routes>
+        <Route path="/" element={<Content />} />
+        <Route path="/streamer/:streamerId" element={<StreamerRecord />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
     </div>
-  );
-}
+  </>
 
 export default App;

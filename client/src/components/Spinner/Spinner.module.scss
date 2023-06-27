@@ -1,0 +1,36 @@
+@mixin dot-animation-delays($count, $delay) {
+  @for $i from 1 through $count {
+    &:nth-child(#{$i}) {
+      animation-delay: $delay * ($i - 1);
+    }
+  }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.dot {
+  width: 60%;
+  height: 60%;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  background-color: #333;
+  border-radius: 100%;
+  animation: animation 1.5s infinite ease-in-out both;
+  @include spinner-dot-animation(3, -0.3s);
+}
+
+@keyframes animation {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+}

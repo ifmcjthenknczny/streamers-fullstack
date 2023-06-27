@@ -9,32 +9,35 @@ import { PublicStreamer } from '../../contract'
 const StreamerRecord = () => {
   const { streamerId } = useParams()
   const [streamer, setStreamer] = useState<PublicStreamer>()
-  const [error, setError] = useState(false)
+  // const [error, setError] = useState(false)
 
+  const fetchStreamer = async (streamerId: string) => {
+    const { data } = await axios.get(`${SERVER_HOST}/api/streamer/${streamerId}`);
+    setStreamer(data);
+  };
 
   useEffect(() => {
     if (streamerId) {
-      setError(false)
       fetchStreamer(streamerId)
-      return
     }
-    setError(true)
+    // else {
+    //   setError(true)
+    // }
   }, [streamerId])
 
-  if (error || !streamer) {
+  if (!streamer) {
     return <Error />
   }
 
-  const fetchStreamer = async (streamerId: string) => {
-    const response = await axios.get(`${SERVER_HOST}/api/streamer/${streamerId}`);
-    setStreamer(response.data);
-  };
-
   return <div>
     <h2 className={styles.name}>{streamer.name}</h2>
-    <img className={styles.image} src={IMAGE_URL} alt={streamer.name} />
-    <p className={styles.description}>{streamer.description}</p>
-    <p className={styles.platform}>Platform: <strong>{streamer.platform}</strong></p>
+    <div className={styles.info}>
+      <img className={styles.image} src={IMAGE_URL} alt={streamer.name} />
+      <div className={styles.details}>
+        <p className={styles.description}>{streamer.description}</p>
+        <p className={styles.platform}>Platform: <strong>{streamer.platform}</strong></p>
+      </div>
+    </div>
   </div>
 }
 
