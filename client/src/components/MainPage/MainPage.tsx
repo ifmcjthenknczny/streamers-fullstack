@@ -1,11 +1,11 @@
 import React from 'react'
-import styles from './Content.module.scss'
+import styles from './MainPage.module.scss'
 import StreamersList from '../StreamersList/StreamersList'
 import StreamerSubmissionForm from '../StreamerSubmissionForm/StreamerSubmissionForm'
 
-const Content = () => <div className={styles.content}>
+const MainPage = () => <div className={styles.content}>
     <StreamersList />
     <StreamerSubmissionForm />
 </div>
 
-export default Content
+export default MainPage

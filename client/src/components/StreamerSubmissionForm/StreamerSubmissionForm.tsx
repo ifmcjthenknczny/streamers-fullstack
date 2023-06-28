@@ -20,27 +20,30 @@ const StreamerSubmissionForm = () => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <label className={styles.label}>
-        <div>Name:</div>
-        <input className={styles.input} type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
-      </label>
-      <label className={classNames(styles.label, styles.platformLabel)}>
-        <div>Platform:</div>
-        <select className={styles.select} value={formData.platform} onChange={(e) => setFormData({ ...formData, platform: e.target.value as Platform })}>
-          {PLATFORMS.map((platform) => (
-            <option key={platform} value={platform}>
-              {platform}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label className={styles.label}>
-        <div>Description:</div>
-        <textarea className={styles.textarea} value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} placeholder="Write streamer's description here" />
-      </label>
-      <button className={styles.submit} type="submit">Submit</button>
-    </form>
+    <div className={styles.formWrapper}>
+      <h2 className={styles.heading}>Add new streamer:</h2>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <label className={styles.label}>
+          <div>Name:</div>
+          <input className={styles.input} type="text" value={formData.name} placeholder="Streamer's name or nickname" onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+        </label>
+        <label className={classNames(styles.label, styles.platformLabel)}>
+          <div>Platform:</div>
+          <select className={styles.select} value={formData.platform} onChange={(e) => setFormData({ ...formData, platform: e.target.value as Platform })}>
+            {PLATFORMS.map((platform) => (
+              <option key={platform} value={platform}>
+                {platform}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className={styles.label}>
+          <div>Description:</div>
+          <textarea className={styles.textarea} value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} placeholder="Write streamer's description here..." />
+        </label>
+        <button className={styles.submit} type="submit">Submit</button>
+      </form>
+    </div>
   );
 };
 export default StreamerSubmissionForm;
