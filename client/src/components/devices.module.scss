@@ -1,0 +1,11 @@
+@mixin handheld() {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin stationary() {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}

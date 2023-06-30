@@ -1,25 +1,45 @@
+@import "../devices.module.scss";
+
 .error {
+  display: flex;
+  flex-direction: row;
+  @include handheld {
     display: flex;
-    flex-direction: row;
-    @media screen and (max-width: 767px) {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .title {
-    font-size: 2rem;
-    font-family: 'Press Start 2P', cursive;
-    @media screen and (max-width: 767px) {
-        font-size: 1.5rem;
-        text-align: center;
-    }
+  font-size: 2rem;
+  font-family: "Press Start 2P", cursive;
+  @include handheld {
+    font-size: 1.5rem;
+    text-align: center;
+  }
 }
 
 .image {
-    max-width: 600px;
-    @media screen and (max-width: 767px) {
-        max-width: 300px;
-    }
+  max-width: 600px;
+  @include handheld {
+    max-width: 300px;
+  }
+}
+
+.desktop {
+  width: 100%;
+  height: 65%;
+  font-size: 10rem;
+  @include handheld {
+    display: none !important;
+  }
+}
+
+.mobile {
+  width: 50%;
+  height: 100px;
+  font-size: 2rem;
+  @include stationary {
+    display: none !important;
+  }
 }

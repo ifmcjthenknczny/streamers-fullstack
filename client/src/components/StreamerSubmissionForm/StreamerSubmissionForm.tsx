@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import styles from './StreamerSubmissionForm.module.scss'
 import { AddStreamerRequest, PLATFORMS, Platform } from '../../contract';
 import classNames from 'classnames'
-import { query } from '../../helpers';
+import { query, validateSchema } from '../../helpers';
 import useBusy from '../../hooks/useBusy';
 import Spinner from '../Spinner/Spinner';
 import Heading from '../Heading/Heading';
+import Joi from 'joi';
+import useListRefresh from '../../hooks/useListRefresh';
 
 const defaultFormData: AddStreamerRequest = {
   name: '',
@@ -13,13 +15,22 @@ const defaultFormData: AddStreamerRequest = {
   description: '',
 }
 
+const schema = Joi.object({
+  name: Joi.string().max(80).required(),
+  platform: Joi.string().valid(...PLATFORMS).required(),
+  description: Joi.string().max(2000),
+})
+
 const StreamerSubmissionForm = () => {
   const [formData, setFormData] = useState(defaultFormData);
   const [isBusy, busyWrapper] = useBusy(false);
+  const [_, setListRefresh] = useListRefresh()
 
   const handleSubmit = busyWrapper(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    validateSchema(formData, schema)
     await query('/streamers', { method: 'POST', body: formData })
+    setListRefresh()
   })
 
   if (isBusy) {
@@ -28,7 +39,7 @@ const StreamerSubmissionForm = () => {
 
   return (
     <div className={styles.formWrapper}>
-      <Heading title="Add a new streamer" />
+      <Heading title="Add a new streamer:" />
       <form className={styles.form} onSubmit={handleSubmit}>
         <label className={styles.label}>
           <div>Name:</div>

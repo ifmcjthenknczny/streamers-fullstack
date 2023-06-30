@@ -8,14 +8,17 @@ import useBusy from '../../hooks/useBusy';
 import Spinner from '../Spinner/Spinner';
 import { BASE_PATHS } from '../../constants';
 import Heading from '../Heading/Heading';
+import useListRefresh from '../../hooks/useListRefresh';
 
 const StreamersList = () => {
   const [streamers, setStreamers] = useState<PublicListStreamer[]>([]);
   const [isBusy, busyWrapper] = useBusy(true)
+  const [needsRefresh, _, clearListRefresh] = useListRefresh()
 
   useEffect(() => {
     fetchStreamers()
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    clearListRefresh()
+  }, [needsRefresh]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchStreamers = busyWrapper(async () => {
     const streamers = await query('/streamers', {})
@@ -28,7 +31,7 @@ const StreamersList = () => {
 
   return (
     <div>
-      <Heading title="List of streamers" />
+      <Heading title="List of streamers:" />
       {!streamers.length && <h5>No streamers found</h5>}
       {!!streamers.length && <ul className={styles.list}>
         {streamers.map((streamer) => <Streamer key={streamer.id} streamer={streamer} />)}

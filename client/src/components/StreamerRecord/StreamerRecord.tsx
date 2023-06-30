@@ -8,6 +8,8 @@ import { query } from '../../helpers'
 import useBusy from '../../hooks/useBusy'
 import Spinner from '../Spinner/Spinner'
 import GoBackButton from '../GoBackButton/GoBackButton'
+import Heading from '../Heading/Heading'
+
 
 const StreamerRecord = () => {
   const { streamerId } = useParams()
@@ -37,7 +39,7 @@ const StreamerRecord = () => {
   }
 
   return <><div className={styles.container}>
-    <h2 className={styles.name}>{streamer.name}</h2>
+    <Heading className={styles.name} title={streamer.name} />
     <div className={styles.info}>
       <img className={styles.image} src={IMAGE_URL} alt={streamer.name} />
       <div className={styles.details}>
@@ -46,7 +48,7 @@ const StreamerRecord = () => {
       </div>
     </div>
   </div>
-  <GoBackButton />
+    <GoBackButton />
   </>
 }
 

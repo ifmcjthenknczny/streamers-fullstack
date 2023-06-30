@@ -1,31 +1,36 @@
-$darkGray: #555555;
-$almostWhite: #f5f5f5;
+@import '../colors.module.scss';
+@import '../devices.module.scss';
 
 .name {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  font-family: "Bungee Hairline", cursive;
+  margin-top: 10px;
 }
+
 .image {
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   height: 150px;
   width: 150px;
   margin-right: 30px;
+  border: 2px $border-color dotted;
+  @include handheld {
+    align-self: center;
+    margin: 0;
+  }
 }
 .description,
 .platform {
   font-size: 1.2rem;
   margin: 0 0 10px;
 }
-.platform {
-  font-weight: bold;
-}
 
 .info {
   display: flex;
   flex-direction: row;
   margin-bottom: 20px;
+  @include handheld {
+    margin: 20px 0 0;
+    flex-direction: column;
+  }
 }
 
 .details {
@@ -37,8 +42,12 @@ $almostWhite: #f5f5f5;
 }
 
 .container {
-  background: linear-gradient(to bottom right, $darkGray, $almostWhite);
-  border: 2px black double;
+  background: linear-gradient(to top left, $dark-gray, lighten($dark-gray, 20%));
+  border: 2px $border-color double;
   padding: 20px 30px;
   max-width: 600px;
+  color: $text-color;
+  @include handheld {
+    text-align: center;
+  }
 }

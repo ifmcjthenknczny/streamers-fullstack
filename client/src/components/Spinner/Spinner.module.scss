@@ -1,3 +1,5 @@
+@import "../colors.module.scss";
+
 @mixin spinner-dot-animation($count, $delay) {
   @for $i from 1 through $count {
     &:nth-child(#{$i}) {
@@ -7,22 +9,19 @@
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin: 20px 0 20px;
 }
 
 .dot {
-  width: 60%;
-  height: 60%;
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  background-color: #333;
-  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  background-color: $dark-gray;
+  border-radius: 50%;
   animation: animation 1.5s infinite ease-in-out both;
-  @include spinner-dot-animation(3, -0.3s);
+  @include spinner-dot-animation(3, 0.3s);
 }
 
 @keyframes animation {

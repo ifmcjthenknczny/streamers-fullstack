@@ -1,3 +1,5 @@
+@import "../colors.module.scss";
+
 .voteBar {
   display: flex;
   align-items: center;
@@ -9,11 +11,12 @@
   cursor: pointer;
   margin-right: 10px;
   padding: 0;
-  color: #000;
-  transition: 0.3s;
+  color: $text-color;
+  transition: 0.3s ease-in-out;
 
-  &:focus {
+  &:hover {
     outline: none;
+    transform: rotate(20deg) scale(1.35);
   }
 }
 
@@ -23,9 +26,9 @@
 }
 
 .upvote:hover {
-  color: green;
+    color: green;
 }
 
 .downvote:hover {
-  color: red;
+    color: red;
 }

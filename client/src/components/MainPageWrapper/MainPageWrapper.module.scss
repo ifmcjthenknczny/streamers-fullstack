@@ -1,11 +1,13 @@
+@import "../devices.module.scss";
+
 .content {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 45% 45%;
-    gap: 10%;
-    @media screen and (max-width: 767px) {
-        display: flex;
-        gap: 20px;
-        flex-direction: column;
-    }
+  width: 100%;
+  display: grid;
+  grid-template-columns: 45% 45%;
+  gap: 10%;
+  @include handheld {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+  }
 }

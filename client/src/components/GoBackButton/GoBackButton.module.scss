@@ -1,21 +1,20 @@
-$lightColor: #f5f5f5;
-$darkColor: darken(darkgrey, 40%);
+@import "../colors.module.scss";
 
 .goBack {
   display: inline-block;
   padding: 10px 20px;
-  background-color: $lightColor;
-  color: $darkColor;
-  border: 2px $darkColor double;
+  background-color: $dark-gray;
+  color: $text-color;
+  border: 2px $border-color double;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 20px;
   transition: 0.3s;
 
   &:hover,
-  &:active {
-    background-color: $darkColor;
-    color: $lightColor;
-    border-color: white;
+  &:focus {
+    background-color: lighten($dark-gray, 10%);
+    color: darken($text-color, 10%);
+    border-color: lighten($border-color, 10%);
   }
 }
