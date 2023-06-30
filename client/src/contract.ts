@@ -1,25 +1,26 @@
 declare global {
   interface Queries {
-    "/api/streamers":
-      | {
-          method: "GET";
-          response: PublicListStreamer[];
-        }
-      | {
-          method: "POST";
-          body: AddStreamerRequest;
-          response: PublicStreamer;
-        };
-    "/api/streamers/:streamerId/vote": {
-      method: "PUT";
-      params: [number];
-      body: VoteRequest;
-      response: VoteNumber;
+    GET: {
+      "/streamers": {
+        response: PublicListStreamer[];
+      };
+      "/streamer/:streamerId": {
+        params: [number];
+        response: PublicStreamer;
+      };
     };
-    "/api/streamer/:streamerId": {
-      method: "GET";
-      params: [number];
-      response: PublicStreamer;
+    POST: {
+      "/streamers": {
+        body: AddStreamerRequest;
+        response: PublicStreamer;
+      };
+    };
+    PUT: {
+      "/streamers/:streamerId/vote": {
+        params: [number];
+        body: VoteRequest;
+        response: VoteNumber;
+      };
     };
   }
 }
@@ -61,6 +62,8 @@ export type VoteNumber = {
   downvotes: number;
 };
 
-export type PublicStreamer = Omit<Streamer, "downvotedBy" | "upvotedBy">
+export type PublicStreamer = Omit<Streamer, "downvotedBy" | "upvotedBy">;
 
-export type PublicListStreamer = Pick<Streamer, "id" | "name"> & VoteNumber
+export type PublicListStreamer = Pick<Streamer, "id" | "name"> & VoteNumber;
+
+export const SERVER_PREFIX = "/api";

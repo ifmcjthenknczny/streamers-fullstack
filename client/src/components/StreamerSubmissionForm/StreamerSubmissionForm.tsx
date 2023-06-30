@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios'
 import styles from './StreamerSubmissionForm.module.scss'
 import { AddStreamerRequest, PLATFORMS, Platform } from '../../contract';
-import { SERVER_HOST } from '../../constants';
 import classNames from 'classnames'
+import { query } from '../../helpers';
+import useBusy from '../../hooks/useBusy';
+import Spinner from '../Spinner/Spinner';
+import Heading from '../Heading/Heading';
 
 const defaultFormData: AddStreamerRequest = {
   name: '',
@@ -13,19 +15,24 @@ const defaultFormData: AddStreamerRequest = {
 
 const StreamerSubmissionForm = () => {
   const [formData, setFormData] = useState(defaultFormData);
+  const [isBusy, busyWrapper] = useBusy(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = busyWrapper(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios.post(`${SERVER_HOST}/api/streamers`, formData)
-  };
+    await query('/streamers', { method: 'POST', body: formData })
+  })
+
+  if (isBusy) {
+    return <Spinner />
+  }
 
   return (
     <div className={styles.formWrapper}>
-      <h2 className={styles.heading}>Add new streamer:</h2>
+      <Heading title="Add a new streamer" />
       <form className={styles.form} onSubmit={handleSubmit}>
         <label className={styles.label}>
           <div>Name:</div>
-          <input className={styles.input} type="text" value={formData.name} placeholder="Streamer's name or nickname" onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+          <input className={styles.input} type="text" value={formData.name} placeholder="Enter streamer's name..." onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
         </label>
         <label className={classNames(styles.label, styles.platformLabel)}>
           <div>Platform:</div>

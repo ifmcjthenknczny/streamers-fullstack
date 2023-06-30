@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import styles from './VoteBar.module.scss'
-import { SERVER_HOST } from '../../constants';
 import { Streamer, Vote } from '../../contract';
 import useSessionId from '../../hooks/useSessionId';
 import classNames from 'classnames';
+import { query } from '../../helpers';
 
 type Props = {
     initialUpvotes: number;
@@ -20,9 +19,9 @@ const VoteBar = ({ initialUpvotes, initialDownvotes, streamerId }: Props) => {
     const sessionId = useSessionId()
 
     const handleVote = async (vote: Vote) => {
-        const response: { data: Queries['/api/streamers/:streamerId/vote']['response'] } = await axios.put(`${SERVER_HOST}/api/streamers/${streamerId}/vote`, { sessionId, type: vote })
-        setUpvotes(response.data.upvotes)
-        setDownvotes(response.data.downvotes)
+        const { upvotes, downvotes } = await query('/streamers/:streamerId/vote', { method: 'PUT', params: {streamerId}, body: { sessionId, type: vote } })
+        setUpvotes(upvotes)
+        setDownvotes(downvotes)
     }
 
     return <div className={styles.voteBar}>

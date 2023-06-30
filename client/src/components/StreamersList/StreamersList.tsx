@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styles from './StreamersList.module.scss'
 import VoteBar from '../VoteBar/VoteBar';
-import { SERVER_HOST } from '../../constants';
 import { PublicListStreamer } from '../../contract';
 import { Link } from 'react-router-dom';
-// import useBusy from '../../hooks/useBusy';
+import { query } from '../../helpers';
+import useBusy from '../../hooks/useBusy';
+import Spinner from '../Spinner/Spinner';
+import { BASE_PATHS } from '../../constants';
+import Heading from '../Heading/Heading';
 
 const StreamersList = () => {
   const [streamers, setStreamers] = useState<PublicListStreamer[]>([]);
-  // const [busy, busyWrapper] = useBusy(true)
+  const [isBusy, busyWrapper] = useBusy(true)
 
   useEffect(() => {
     fetchStreamers()
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const fetchStreamers = async () => {
-    const { data } = await axios.get(`${SERVER_HOST}/api/streamers`);
-    setStreamers(data);
-  };
+  const fetchStreamers = busyWrapper(async () => {
+    const streamers = await query('/streamers', {})
+    setStreamers(streamers);
+  })
+
+  if (isBusy) {
+    return <Spinner />
+  }
 
   return (
     <div>
-      <h2 className={styles.heading}>List of streamers:</h2>
+      <Heading title="List of streamers" />
       {!streamers.length && <h5>No streamers found</h5>}
       {!!streamers.length && <ul className={styles.list}>
         {streamers.map((streamer) => <Streamer key={streamer.id} streamer={streamer} />)}
@@ -34,8 +40,7 @@ const StreamersList = () => {
 export default StreamersList;
 
 const Streamer = ({ streamer }: { streamer: PublicListStreamer }) => <li className={styles.streamer}>
-  <Link to={`/streamer/${streamer.id}`} className={styles.link}>
+  <Link to={BASE_PATHS.streamer(streamer.id)} className={styles.link}>
     <div className={styles.name}>{streamer.name}</div></Link>
   <VoteBar initialUpvotes={streamer.upvotes} initialDownvotes={streamer.downvotes} streamerId={streamer.id} />
-
 </li>

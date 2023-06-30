@@ -1,8 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Spice&family=Press+Start+2P&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Spice&family=Press+Start+2P&display=swap");
+
+$primary: #8a2be2;
 
 .app {
-    padding: 1em 3em;
-    margin: auto;
-    line-height: 1.75;
-    font-size: 1.25em;
+  padding: 1em 3em;
+  margin: auto;
+  line-height: 1.75;
+  font-size: 1.25em;
+}
+
+.appContainer {
+  background: linear-gradient(to bottom right, $primary, lighten($primary, 10%));
+  min-height: 100vh;
+  margin: 40px 0 40px;
 }

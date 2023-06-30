@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import "dotenv/config";
 import cors from "cors";
 import { streamerRouter, streamersRouter } from "./index";
+import { SERVER_PREFIX } from "./contract";
 
 const port = process.env.PORT || 5000;
 
@@ -19,8 +20,8 @@ app.use(bodyParser.json());
 app.use(express.static("build"));
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use("/api/streamer", streamerRouter);
-app.use("/api/streamers", streamersRouter);
+app.use(`${SERVER_PREFIX}/streamer`, streamerRouter);
+app.use(`${SERVER_PREFIX}/streamers`, streamersRouter);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
 });

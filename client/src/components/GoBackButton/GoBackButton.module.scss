@@ -1,0 +1,21 @@
+$lightColor: #f5f5f5;
+$darkColor: darken(darkgrey, 40%);
+
+.goBack {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: $lightColor;
+  color: $darkColor;
+  border: 2px $darkColor double;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s;
+
+  &:hover,
+  &:active {
+    background-color: $darkColor;
+    color: $lightColor;
+    border-color: white;
+  }
+}

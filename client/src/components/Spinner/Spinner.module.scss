@@ -1,4 +1,4 @@
-@mixin dot-animation-delays($count, $delay) {
+@mixin spinner-dot-animation($count, $delay) {
   @for $i from 1 through $count {
     &:nth-child(#{$i}) {
       animation-delay: $delay * ($i - 1);
