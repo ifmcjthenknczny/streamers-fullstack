@@ -7,7 +7,12 @@ import {
 import express from "express";
 import bodyParser from "body-parser";
 import { ObjectId } from "mongodb";
-import { AddStreamerRequest, Streamer, VoteRequest, VOTE_TYPES } from "./contract";
+import {
+  AddStreamerRequest,
+  Streamer,
+  VoteRequest,
+  VOTE_TYPES,
+} from "../shared/contract";
 import mongoose, { Connection, Collection } from "mongoose";
 import "dotenv/config";
 
@@ -18,8 +23,6 @@ const STREAMERS_COLLECTION_NAME = "streamers";
 
 let db: Connection;
 let streamersCollection: Collection<Streamer>;
-
-// type DbStreamer = Omit<Streamer, "id"> & { _id: ObjectId };
 
 mongoose
   .connect(MONGO_URL)
@@ -38,10 +41,9 @@ export const addStreamerVote = async ({
   type,
 }: VoteRequest) => {
   const [targetArray] = mapVoteArrayNames(type);
-  return await streamersCollection.updateOne(
-    { _id: new ObjectId(streamerId) },
-    { $push: { [targetArray]: sessionId } }
-  );
+  return await streamersCollection.updateOne(toMongoId({ id: streamerId }), {
+    $push: { [targetArray]: sessionId },
+  });
 };
 
 export const eraseStreamerVote = async ({
@@ -50,10 +52,9 @@ export const eraseStreamerVote = async ({
   type,
 }: VoteRequest) => {
   const [targetArray] = mapVoteArrayNames(type);
-  return await streamersCollection.updateOne(
-    { _id: new ObjectId(streamerId) },
-    { $pull: { [targetArray]: sessionId } }
-  );
+  return await streamersCollection.updateOne(toMongoId({ id: streamerId }), {
+    $pull: { [targetArray]: sessionId },
+  });
 };
 
 export const registerStreamerVote = async (payload: VoteRequest) => {
@@ -67,12 +68,14 @@ export const registerStreamerVote = async (payload: VoteRequest) => {
     await addStreamerVote({ sessionId, streamerId, type });
   }
   if ((streamer[otherArray] as string[]).includes(sessionId)) {
-    await eraseStreamerVote({ sessionId, streamerId, type: VOTE_TYPES.filter((t) => t !== type).at(0)! });
+    await eraseStreamerVote({
+      sessionId,
+      streamerId,
+      type: VOTE_TYPES.filter((t) => t !== type).at(0)!,
+    });
   }
-  const after = await findStreamer(streamerId);
   return {
-    before: mapVoteArrayToVoteAmount(streamer),
-    after: mapVoteArrayToVoteAmount(after),
+    ...mapVoteArrayToVoteAmount(await findStreamer(streamerId)),
   };
 };
 

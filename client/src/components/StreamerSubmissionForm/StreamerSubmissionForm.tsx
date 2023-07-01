@@ -24,7 +24,7 @@ const schema = Joi.object({
 const StreamerSubmissionForm = () => {
   const [formData, setFormData] = useState(defaultFormData);
   const [isBusy, busyWrapper] = useBusy(false);
-  const [_, setListRefresh] = useListRefresh()
+  const [, setListRefresh] = useListRefresh()
 
   const handleSubmit = busyWrapper(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './App.module.scss'
 import StreamerRecord from './components/StreamerRecord/StreamerRecord';
 import Logo from './components/Logo/Logo';
-import MainPage from './components/MainPageWrapper/MainPageWrapper';
+import MainPage from './components/MainPage/MainPage';
 import { Routes, Route } from 'react-router-dom'
-import Error from './components/Error/Error';
+import Error from './components/ErrorPage/ErrorPage';
 import { BASE_PATHS } from './constants';
 
 const App = () =>

@@ -7,7 +7,7 @@ import voteStreamer from "./handlers/voteStreamer";
 export const streamerRouter = Router();
 streamerRouter.get("/:streamerId", getStreamer);
 
-export const streamersRouter = Router()
+export const streamersRouter = Router();
 streamersRouter.get("", listStreamers);
 streamersRouter.post("", addStreamer);
 streamersRouter.put("/:streamerId/vote", voteStreamer);

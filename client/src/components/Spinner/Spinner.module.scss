@@ -1,4 +1,4 @@
-@import "../colors.module.scss";
+@import "../../design/colors.module.scss";
 
 @mixin spinner-dot-animation($count, $delay) {
   @for $i from 1 through $count {

@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Spice&family=Press+Start+2P&display=swap");
-@import './components/colors.module.scss';
+@import "./design/colors.module.scss";
 
 .app {
   padding: 1em 3em;
@@ -9,7 +8,11 @@
 }
 
 .appContainer {
-  background: linear-gradient(to top left, $background-primary, lighten($background-primary, 35%));
+  background: linear-gradient(
+    to top left,
+    $background-primary,
+    lighten($background-primary, 20%)
+  );
   min-height: 100vh;
   margin: 40px 0 40px;
 }

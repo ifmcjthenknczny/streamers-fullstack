@@ -5,7 +5,9 @@ declare global {
         response: PublicListStreamer[];
       };
       "/streamer/:streamerId": {
-        params: [number];
+        params: {
+          streamerId: number;
+        };
         response: PublicStreamer;
       };
     };
@@ -17,7 +19,9 @@ declare global {
     };
     PUT: {
       "/streamers/:streamerId/vote": {
-        params: [number];
+        params: {
+          streamerId: number;
+        };
         body: VoteRequest;
         response: VoteNumber;
       };
@@ -67,3 +71,6 @@ export type PublicStreamer = Omit<Streamer, "downvotedBy" | "upvotedBy">;
 export type PublicListStreamer = Pick<Streamer, "id" | "name"> & VoteNumber;
 
 export const SERVER_PREFIX = "/api";
+
+export const SERVER_HOST = "http://localhost:5000";
+// export const CLIENT_HOST = "http://localhost:3000";

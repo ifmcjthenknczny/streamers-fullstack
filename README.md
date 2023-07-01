@@ -1,46 +1,47 @@
-# Getting Started with Create React App
+# STREAMSHACK - streamers knowledge base
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Responsive fullstack webpage allowing you to add, rate and view streamers.
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [General info](#general-info)
+- [Technologies](#technologies)
+- [Setup](#setup)
+- [Features](#features)
+- [Status](#status)
+- [Inspiration](#inspiration)
+- [Contact](#contact)
 
-### `npm start`
+## General info
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This project allows users to add, rate and view streamers, also in details. Adding new streamers to database is implemented through submission form and new entries, as well as new votes, are passed immidiately to the streamers list.Both a form a streamers list make up the homepage. Another page is Streamer record, which presents details about streamer of given id.
+Everything is validated by Joi, error-safe by using a proper hook as well as expected responses from endpoints are typed in contracts.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Technologies used
 
-### `npm test`
+- HTML5
+- Sass
+- Typescript 4.9
+- Node.js
+- React 18 & React Router & Redux
+- MongoDB / Mongoose
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How to run it?
 
-### `npm run build`
+After providing valid MONGO_URL in env variables, you need to run client and server separately.
+Run server first by running command `npm start` (on Linux-based systems or `npm run startwin` on Windows) in /server directory. This command will run your server as well as copy contract from "shared" folder to "client/src" directory.
+Then you can run frontend. Use `npm start` in client directory.
+There you go! The app is up and running.
+If you want to run the app not locally, you'd have to change `SERVER_HOST` variable in contract in order to requests from server to run properly. Default server host is `http://localhost:5000/`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Status
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Project is: _finished_
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Inspiration
 
-### `npm run eject`
+Build with given requirements as an entry task for one of IT companies.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Contact
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Created purely by Maciej Konieczny.

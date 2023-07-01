@@ -1,4 +1,4 @@
-@import "../colors.module.scss";
+@import "../../design/colors.module.scss";
 
 .voteBar {
   display: flex;
@@ -26,9 +26,9 @@
 }
 
 .upvote:hover {
-    color: green;
+  color: green;
 }
 
 .downvote:hover {
-    color: red;
+  color: red;
 }

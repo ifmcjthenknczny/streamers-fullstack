@@ -7,14 +7,16 @@ type Props = {
     className?: string
 }
 
-const GoBackButton = ({className}: Props) => {
+const GoBackButton = ({ className }: Props) => {
     const navigate = useNavigate()
 
     const handleClick = () => {
         navigate(-1)
     }
 
-    return <button className={classNames(styles.goBack, className)} onClick={handleClick}><strong className={styles.text}>Go Back</strong></button>
+    return <button className={classNames(styles.goBack, className)} onClick={handleClick}>
+        <strong className={styles.text}>Go Back</strong>
+    </button>
 }
 
 export default GoBackButton

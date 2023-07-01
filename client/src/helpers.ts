@@ -1,6 +1,5 @@
-import { SERVER_HOST } from "./constants";
 import axios from "axios";
-import { SERVER_PREFIX } from "./contract";
+import { SERVER_HOST, SERVER_PREFIX } from "./contract";
 import { Schema } from "joi";
 
 type RequestOptions<M extends keyof Queries = "GET"> = {

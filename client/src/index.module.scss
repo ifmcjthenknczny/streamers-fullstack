@@ -1,9 +1,8 @@
-$margin-color: #181A1B;
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Spice&family=Press+Start+2P&family=Roboto+Condensed:wght@300&display=swap');
+@import './design/colors.module.scss';
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $margin-color;

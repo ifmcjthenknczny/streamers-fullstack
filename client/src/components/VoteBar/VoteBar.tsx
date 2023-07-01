@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import styles from './VoteBar.module.scss'
-import { Streamer, Vote } from '../../contract';
 import useSessionId from '../../hooks/useSessionId';
 import classNames from 'classnames';
 import { query } from '../../helpers';
 import useBusy from '../../hooks/useBusy';
+import { Streamer, Vote } from '../../../../shared/contract';
 
 type Props = {
     initialUpvotes: number;

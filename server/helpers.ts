@@ -1,6 +1,12 @@
-import { PublicStreamer, PublicListStreamer, Streamer, Vote, VoteNumber } from "./contract";
+import {
+  PublicStreamer,
+  PublicListStreamer,
+  Streamer,
+  Vote,
+  VoteNumber,
+} from "../shared/contract";
 import { ObjectId } from "mongodb";
-import { Schema } from 'joi'
+import { Schema } from "joi";
 
 export const mapVoteArrayNames = (type: Vote) => {
   const targetArray = type === "upvote" ? "upvotedBy" : "downvotedBy";
@@ -40,19 +46,26 @@ export const pick = <T extends { [key: string]: any }, K extends keyof T>(
   }, {} as Pick<T, K>);
 };
 
-export const toPublicStreamer = (streamer: Streamer): PublicStreamer => omit((streamer), ["upvotedBy", "downvotedBy"])
+export const toPublicStreamer = (streamer: Streamer): PublicStreamer =>
+  omit(streamer, ["upvotedBy", "downvotedBy"]);
 
-export const toPublicListStreamer = (streamer: Streamer): PublicListStreamer => ({
-  ...pick(streamer, ['id', 'name']),
-  ...mapVoteArrayToVoteAmount(streamer)
-})
+export const toPublicListStreamer = (
+  streamer: Streamer
+): PublicListStreamer => ({
+  ...pick(streamer, ["id", "name"]),
+  ...mapVoteArrayToVoteAmount(streamer),
+});
 
-export const fromMongoId = <T extends { _id: ObjectId }>(obj: T): Omit<T, '_id'> & { id: string } => {
+export const fromMongoId = <T extends { _id: ObjectId }>(
+  obj: T
+): Omit<T, "_id"> & { id: string } => {
   const { _id, ...rest } = obj;
   return { ...rest, id: _id.toHexString() };
 };
 
-export const toMongoId = <T extends { id: string }>(obj: T): Omit<T, 'id'> & { _id: ObjectId } => {
+export const toMongoId = <T extends { id: string }>(
+  obj: T
+): Omit<T, "id"> & { _id: ObjectId } => {
   const { id, ...rest } = obj;
   return { ...rest, _id: new ObjectId(id) };
 };

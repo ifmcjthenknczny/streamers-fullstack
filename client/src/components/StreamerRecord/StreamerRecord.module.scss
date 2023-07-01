@@ -1,5 +1,5 @@
-@import '../colors.module.scss';
-@import '../devices.module.scss';
+@import "../../design/colors.module.scss";
+@import "../../design/devices.module.scss";
 
 .name {
   margin-top: 10px;
@@ -42,7 +42,11 @@
 }
 
 .container {
-  background: linear-gradient(to top left, $dark-gray, lighten($dark-gray, 20%));
+  background: linear-gradient(
+    to top left,
+    $dark-gray,
+    lighten($dark-gray, 20%)
+  );
   border: 2px $border-color double;
   padding: 20px 30px;
   max-width: 600px;

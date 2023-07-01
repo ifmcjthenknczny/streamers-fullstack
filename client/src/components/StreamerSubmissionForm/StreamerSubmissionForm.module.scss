@@ -1,4 +1,4 @@
-@import "../colors.module.scss";
+@import "../../design/colors.module.scss";
 
 .form {
   display: flex;
@@ -54,7 +54,8 @@
   background-color: $dark-gray;
   cursor: pointer;
   transition: 0.2s;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: middle-gray;
   }
 }

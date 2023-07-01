@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react'
 import styles from './StreamerRecord.module.scss'
 import { useParams } from 'react-router-dom'
 import { IMAGE_URL } from '../../constants'
-import Error from '../Error/Error'
-import { PublicStreamer } from '../../contract'
+import Error from '../ErrorPage/ErrorPage'
 import { query } from '../../helpers'
 import useBusy from '../../hooks/useBusy'
 import Spinner from '../Spinner/Spinner'
 import GoBackButton from '../GoBackButton/GoBackButton'
 import Heading from '../Heading/Heading'
-
+import { PublicStreamer } from '../../../../shared/contract'
 
 const StreamerRecord = () => {
   const { streamerId } = useParams()
