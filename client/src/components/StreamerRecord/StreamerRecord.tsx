@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from './StreamerRecord.module.scss'
 import { useParams } from 'react-router-dom'
-import { IMAGE_URL } from '../../constants'
 import Error from '../ErrorPage/ErrorPage'
 import { query } from '../../helpers'
 import useBusy from '../../hooks/useBusy'
@@ -9,6 +8,9 @@ import Spinner from '../Spinner/Spinner'
 import GoBackButton from '../GoBackButton/GoBackButton'
 import Heading from '../Heading/Heading'
 import { type PublicStreamer } from '../../contract'
+
+const IMAGE_URL =
+  'https://static-cdn.jtvnw.net/jtv_user_pictures/asmongold-profile_image-f7ddcbd0332f5d28-300x300.png'
 
 const StreamerRecord = () => {
     const { streamerId } = useParams()
