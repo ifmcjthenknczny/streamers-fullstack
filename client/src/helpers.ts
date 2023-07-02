@@ -5,7 +5,7 @@ import { Schema } from 'joi'
 interface RequestOptions<M extends keyof Queries = 'GET'> {
   method?: M;
   params?: Record<string, string>;
-  body?: Record<string, unknown>;
+  body?: object;
 }
 
 type QueryResponse<
