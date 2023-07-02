@@ -5,6 +5,13 @@
   margin-top: 10px;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .image {
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -49,9 +56,12 @@
   );
   border: 2px $border-color double;
   padding: 20px 30px;
-  max-width: 600px;
   color: $text-color;
   @include handheld {
     text-align: center;
+    width: 100%;
+  }
+  @include stationary {
+    width: 600px;
   }
 }
