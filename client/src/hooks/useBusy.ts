@@ -1,26 +1,26 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { BASE_PATHS } from "../constants";
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { BASE_PATHS } from '../constants'
 
 const useBusy = (
-  initialBusyState = false
-): [boolean, <T extends (...args: any[]) => any>(f: T) => T] => {
-  const navigate = useNavigate();
-  const [isBusy, setBusy] = useState(initialBusyState);
+    initialBusyState = false
+): [boolean, <T extends (...args: any[]) => any>(f: T) => T] => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    const navigate = useNavigate()
+    const [isBusy, setBusy] = useState(initialBusyState)
 
-  const busyWrapper = <T extends (...args: any[]) => any>(f: T): T =>
+    const busyWrapper = <T extends (...args: any[]) => any>(f: T): T => // eslint-disable-line @typescript-eslint/no-explicit-any
     (async (...args) => {
-      setBusy(true);
-      try {
-        return await f(...args);
-      } catch (e) {
-        navigate(BASE_PATHS.error);
-      } finally {
-        setBusy(false);
-      }
-    }) as T;
+        setBusy(true)
+        try {
+            return await f(...args)
+        } catch (e) {
+            navigate(BASE_PATHS.error)
+        } finally {
+            setBusy(false)
+        }
+    }) as T
 
-  return [isBusy, busyWrapper];
-};
+    return [isBusy, busyWrapper]
+}
 
-export default useBusy;
+export default useBusy

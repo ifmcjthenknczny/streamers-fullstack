@@ -1,67 +1,74 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react'
 import styles from './StreamerSubmissionForm.module.scss'
-import { AddStreamerRequest, PLATFORMS, Platform } from '../../contract';
+import {type AddStreamerRequest, PLATFORMS, type Platform} from '../../contract'
 import classNames from 'classnames'
-import { query, validateSchema } from '../../helpers';
-import useBusy from '../../hooks/useBusy';
-import Spinner from '../Spinner/Spinner';
-import Heading from '../Heading/Heading';
-import Joi from 'joi';
-import useListRefresh from '../../hooks/useListRefresh';
+import {query, validateSchema} from '../../helpers'
+import useBusy from '../../hooks/useBusy'
+import Spinner from '../Spinner/Spinner'
+import Heading from '../Heading/Heading'
+import Joi from 'joi'
+import useListRefresh from '../../hooks/useListRefresh'
 
 const defaultFormData: AddStreamerRequest = {
-  name: '',
-  platform: 'Twitch',
-  description: '',
+    name: '',
+    platform: 'Twitch',
+    description: '',
 }
 
 const schema = Joi.object({
-  name: Joi.string().max(80).required(),
-  platform: Joi.string().valid(...PLATFORMS).required(),
-  description: Joi.string().max(2000),
+    name: Joi.string().max(80).required(),
+    platform: Joi.string().valid(...PLATFORMS).required(),
+    description: Joi.string().max(2000),
 })
 
 const StreamerSubmissionForm = () => {
-  const [formData, setFormData] = useState(defaultFormData);
-  const [isBusy, busyWrapper] = useBusy(false);
-  const [, setListRefresh] = useListRefresh()
+    const [formData, setFormData] = useState(defaultFormData)
+    const [isBusy, busyWrapper] = useBusy(false)
+    const [, setListRefresh] = useListRefresh()
 
-  const handleSubmit = busyWrapper(async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    validateSchema(formData, schema)
-    await query('/streamers', { method: 'POST', body: formData })
-    setListRefresh()
-  })
+    const handleSubmit = busyWrapper(async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        validateSchema(formData, schema)
+        await query('/streamers', {method: 'POST', body: formData})
+        setListRefresh()
+    })
 
-  if (isBusy) {
-    return <Spinner />
-  }
+    if (isBusy) {
+        return <Spinner />
+    }
 
-  return (
-    <div className={styles.formWrapper}>
-      <Heading title="Add a new streamer:" />
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <label className={styles.label}>
-          <div>Name:</div>
-          <input className={styles.input} type="text" value={formData.name} placeholder="Enter streamer's name..." onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
-        </label>
-        <label className={classNames(styles.label, styles.platformLabel)}>
-          <div>Platform:</div>
-          <select className={styles.select} value={formData.platform} onChange={(e) => setFormData({ ...formData, platform: e.target.value as Platform })}>
-            {PLATFORMS.map((platform) => (
-              <option key={platform} value={platform}>
-                {platform}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className={styles.label}>
-          <div>Description:</div>
-          <textarea className={styles.textarea} value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} placeholder="Write streamer's description here..." />
-        </label>
-        <button className={styles.submit} type="submit">Submit</button>
-      </form>
-    </div>
-  );
-};
-export default StreamerSubmissionForm;
+    return (
+        <div className={styles.formWrapper}>
+            <Heading title='Add a new streamer:' />
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <label className={styles.label}>
+                    <div>Name:</div>
+                    <input className={styles.input} type='text' value={formData.name} placeholder="Enter streamer's name..." onChange={e => {
+                        setFormData({...formData, name: e.target.value})
+                    }} />
+                </label>
+                <label className={classNames(styles.label, styles.platformLabel)}>
+                    <div>Platform:</div>
+                    <select className={styles.select} value={formData.platform} onChange={e => {
+                        setFormData({...formData, platform: e.target.value as Platform})
+                    }}>
+                        {PLATFORMS.map(platform => (
+                            <option key={platform} value={platform}>
+                                {platform}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label className={styles.label}>
+                    <div>Description:</div>
+                    <textarea className={styles.textarea} value={formData.description} onChange={e => {
+                        setFormData({...formData, description: e.target.value})
+                    }} placeholder="Write streamer's description here..." />
+                </label>
+                <button className={styles.submit} type='submit'>Submit</button>
+            </form>
+        </div>
+    )
+}
+
+export default StreamerSubmissionForm

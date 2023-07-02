@@ -1,13 +1,13 @@
 import React from 'react'
 import styles from './GoBackButton.module.scss'
-import { useNavigate } from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import classNames from 'classnames'
 
 type Props = {
-    className?: string
-}
+	className?: string;
+};
 
-const GoBackButton = ({ className }: Props) => {
+const GoBackButton = ({className}: Props) => {
     const navigate = useNavigate()
 
     const handleClick = () => {

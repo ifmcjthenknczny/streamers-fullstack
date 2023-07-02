@@ -1,33 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
-type AppState = {
-  listNeedsRefresh: boolean;
-};
+interface AppState {
+  listNeedsRefresh: boolean
+}
 
 const initialState: AppState = {
-  listNeedsRefresh: false,
-};
+    listNeedsRefresh: false
+}
 
 const appSlice = createSlice({
-  name: "app",
-  initialState,
-  reducers: {
-    setNeedsRefresh: (state) => {
-      state.listNeedsRefresh = true;
-    },
-    clearNeedsRefresh: (state) => {
-      state.listNeedsRefresh = false;
-    },
-  },
-});
+    name: 'app',
+    initialState,
+    reducers: {
+        setNeedsRefresh: (state) => {
+            state.listNeedsRefresh = true
+        },
+        clearNeedsRefresh: (state) => {
+            state.listNeedsRefresh = false
+        }
+    }
+})
 
-export type RootState = {
-  [appSlice.name]: AppState;
-};
+export interface RootState {
+  [appSlice.name]: AppState
+}
 
 export const {
     setNeedsRefresh,
-    clearNeedsRefresh,
-} = appSlice.actions;
+    clearNeedsRefresh
+} = appSlice.actions
 
-export default appSlice.reducer;
+export default appSlice.reducer

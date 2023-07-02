@@ -9,4 +9,3 @@ const MainPage = () => <div className={styles.content}>
 </div>
 
 export default MainPage
-
