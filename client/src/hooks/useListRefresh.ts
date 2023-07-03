@@ -1,8 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { type RootState, clearNeedsRefresh, setNeedsRefresh } from '../redux/slices'
+import { useDispatch } from 'react-redux'
+import { clearNeedsRefresh, setNeedsRefresh } from '../redux/slices'
+import useSelector from './useSelector'
 
 const useListRefresh = (): [boolean, () => void, () => void] => {
-    const needsRefresh = useSelector((s: RootState) => s.app.listNeedsRefresh)
+    const needsRefresh = useSelector(s => s.listNeedsRefresh)
     const dispatch = useDispatch()
     const setTrue = () => dispatch(setNeedsRefresh())
     const setFalse = () => dispatch(clearNeedsRefresh())

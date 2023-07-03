@@ -1,7 +1,7 @@
 import Joi from 'joi'
 import { PLATFORMS, VOTE_TYPES } from '../shared/contract'
 
-export const idSchema = Joi.string()
+export const idSchema = Joi.string().pattern(/^[0-9a-fA-F]{24}$/)
 
 export const addStreamerRequestSchema = Joi.object({
     name: Joi.string().max(80).required(),

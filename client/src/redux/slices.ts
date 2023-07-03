@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-interface AppState {
+export type AppState = {
   listNeedsRefresh: boolean
 }
 
 const initialState: AppState = {
-    listNeedsRefresh: false
+    listNeedsRefresh: false,
 }
 
 const appSlice = createSlice({
@@ -17,17 +17,13 @@ const appSlice = createSlice({
         },
         clearNeedsRefresh: (state) => {
             state.listNeedsRefresh = false
-        }
+        },
     }
 })
 
-export interface RootState {
-  [appSlice.name]: AppState
-}
-
 export const {
     setNeedsRefresh,
-    clearNeedsRefresh
+    clearNeedsRefresh,
 } = appSlice.actions
 
 export default appSlice.reducer

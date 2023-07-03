@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BASE_PATHS } from '../constants'
 
 const useBusy = (
     initialBusyState = false
-): [boolean, <T extends (...args: any[]) => any>(f: T) => T] => { // eslint-disable-line @typescript-eslint/no-explicit-any
+): [boolean, <T extends (...args: any[]) => any>(f: T) => T] => { 
     const navigate = useNavigate()
     const [isBusy, setBusy] = useState(initialBusyState)
 
-    const busyWrapper = <T extends (...args: any[]) => any>(f: T): T => // eslint-disable-line @typescript-eslint/no-explicit-any
+    const busyWrapper = <T extends (...args: any[]) => any>(
+        f: T
+    ): T =>
     (async (...args) => {
         setBusy(true)
         try {

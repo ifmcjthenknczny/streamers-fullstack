@@ -44,7 +44,7 @@ export const query = async <
     const { data } = ['POST', 'PUT'].includes(method)
         ? await axios({ url, method, data: body })
         : await axios({ url, method })
-
+            
     return data
 }
 

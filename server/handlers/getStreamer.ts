@@ -5,7 +5,7 @@ import { toPublicStreamer } from '../helpers'
 import { idParamsSchema } from '../schemas'
 
 export default async (req: Request, res: Response) => {
-    const { streamerId } = validateSchema(req.params, idParamsSchema)
+    const { streamerId } = validateSchema<{streamerId: string}>(req.params as {streamerId: string}, idParamsSchema)
     const streamer = await findStreamer(streamerId)
     res.json(toPublicStreamer(streamer))
 }

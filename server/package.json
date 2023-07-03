@@ -4,7 +4,8 @@
   "description": "Backend for streamers site",
   "main": "index.ts",
   "scripts": {
-    "start": "cross-var \"cp ../shared/contract.ts ../client/src/contract.ts\" && nodemon server.ts",
+    "start": "npm run lint && cp ../shared/contract.ts ../client/src/contract.ts && cd ../client && npm run lint && cd ../server && nodemon server.ts",
+    "startwin": "npm run lint && copy ..\\shared\\contract.ts ..\\client\\src\\contract.ts && cd ..\\client && npm run lint && cd ../server && nodemon server.ts",
     "lint": "npx eslint --ext .ts . --fix"
   },
   "author": "Maciej Konieczny",
@@ -31,7 +32,6 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "cross-var": "^1.1.0",
     "dotenv": "^16.3.1",
     "jest": "^29.5.0",
     "joi": "^17.9.2",

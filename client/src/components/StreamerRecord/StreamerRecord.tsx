@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from './StreamerRecord.module.scss'
 import { useParams } from 'react-router-dom'
-import Error from '../ErrorPage/ErrorPage'
 import { query } from '../../helpers'
 import useBusy from '../../hooks/useBusy'
 import Spinner from '../Spinner/Spinner'
@@ -10,12 +9,11 @@ import Heading from '../Heading/Heading'
 import { type PublicStreamer } from '../../contract'
 
 const IMAGE_URL =
-  'https://static-cdn.jtvnw.net/jtv_user_pictures/asmongold-profile_image-f7ddcbd0332f5d28-300x300.png'
+    'https://static-cdn.jtvnw.net/jtv_user_pictures/asmongold-profile_image-f7ddcbd0332f5d28-300x300.png'
 
 const StreamerRecord = () => {
     const { streamerId } = useParams()
     const [streamer, setStreamer] = useState<PublicStreamer>()
-    const [error, setError] = useState(false)
     const [isBusy, busyWrapper] = useBusy(true)
 
     const fetchStreamer = busyWrapper(async (streamerId: string) => {
@@ -26,8 +24,6 @@ const StreamerRecord = () => {
     useEffect(() => {
         if (streamerId) {
             fetchStreamer(streamerId) // eslint-disable-line @typescript-eslint/no-floating-promises
-        } else {
-            setError(true)
         }
     }, [streamerId])
 
@@ -35,8 +31,8 @@ const StreamerRecord = () => {
         return <Spinner />
     }
 
-    if ((streamer == null) || error) {
-        return <Error />
+    if (!streamer) {
+        return null
     }
 
     return <div className={styles.wrapper}>

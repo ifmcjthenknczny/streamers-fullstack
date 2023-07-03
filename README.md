@@ -29,7 +29,7 @@ Everything is validated by Joi, error-safe by using a proper hook as well as exp
 ## How to run it?
 
 After providing valid MONGO_URL in env variables, you need to run client and server separately.
-Run server first by running command `npm start` in /server directory. This command will run your server as well as copy contract from "shared" folder to "client/src" directory.
+Run server first by running command `npm start` (for Linux-based systems) in /server directory (`npm run startwin` for Windows OS). This command will run your server as well as copy contract from "shared" folder to "client/src" directory.
 Then you can run frontend. Use `npm start` in client directory.
 There you go! The app is up and running.
 If you want to run the app not locally, you'd have to change `SERVER_HOST` variable in contract in order to requests from server to run properly. Default server host is `http://localhost:5000/`.
