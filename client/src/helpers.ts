@@ -50,7 +50,7 @@ export const query = async <
 
 export const validateSchema = <T>(data: T, schema: Schema<T>): T => {
     const { error, value } = schema.validate(data)
-    if (error != null) {
+    if (error) {
         throw new Error(`Validation error: ${error.message}`)
     }
     return value
