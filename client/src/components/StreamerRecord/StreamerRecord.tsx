@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import styles from './StreamerRecord.module.scss'
 import { useParams } from 'react-router-dom'
 import { query } from '../../helpers'
-import useBusy from '../../hooks/useBusy'
+import useQueryStatus from '../../hooks/useQueryStatus'
 import Spinner from '../Spinner/Spinner'
-import GoBackButton from '../GoBackButton/GoBackButton'
+import MenuButton from '../MenuButton/MenuButton'
 import Heading from '../Heading/Heading'
 import { type PublicStreamer } from '../../contract'
 
@@ -14,7 +14,7 @@ const IMAGE_URL =
 const StreamerRecord = () => {
     const { streamerId } = useParams()
     const [streamer, setStreamer] = useState<PublicStreamer>()
-    const [isBusy, busyWrapper] = useBusy(true)
+    const [isBusy, busyWrapper] = useQueryStatus(true)
 
     const fetchStreamer = busyWrapper(async (streamerId: string) => {
         const streamer = await query('/streamer/:streamerId', { params: { streamerId } })
@@ -46,7 +46,7 @@ const StreamerRecord = () => {
                 </div>
             </div>
         </div>
-        <GoBackButton />
+        <MenuButton />
     </div>
 }
 

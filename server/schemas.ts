@@ -3,6 +3,8 @@ import { PLATFORMS, VOTE_TYPES } from '../shared/contract'
 
 export const idSchema = Joi.string().pattern(/^[0-9a-fA-F]{24}$/)
 
+export const sessionIdSchema = Joi.string()
+
 export const addStreamerRequestSchema = Joi.object({
     name: Joi.string().max(80).required(),
     platform: Joi.string()
@@ -16,7 +18,7 @@ export const voteRequestSchema = Joi.object({
     type: Joi.string()
         .valid(...VOTE_TYPES)
         .required(),
-    sessionId: idSchema.required(),
+    sessionId: sessionIdSchema.required()
 })
 
 export const idParamsSchema = Joi.object({

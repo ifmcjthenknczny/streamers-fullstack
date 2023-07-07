@@ -8,6 +8,7 @@ import {
 import { ObjectId } from 'mongodb'
 import { Schema } from 'joi'
 import { Request, Response, NextFunction, RequestHandler } from 'express'
+import { ValidationError } from './failures'
 
 export const mapVoteArrayNames = (type: Vote) => {
     const targetArray = type === 'upvote' ? 'upvotedBy' : 'downvotedBy'
@@ -50,7 +51,7 @@ export const toMongoId = <T extends { id: string }>(
 export const validateSchema = <T>(data: T, schema: Schema<T>): T => {
     const { error, value } = schema.validate(data)
     if (error) {
-        throw new Error(`Validation error: ${error.message}`)
+        throw ValidationError(error.message)
     }
     return value
 }
@@ -60,7 +61,7 @@ export const asyncHandler = (handler: RequestHandler): RequestHandler => {
         try {
             await handler(req, res, next)
         } catch (e) {
-            const { message, statusCode = 400 } = e as {message: string; statusCode: number}
+            const { message, statusCode = 500 } = e as {message: string; statusCode: number}
             res.status(statusCode).json({error: message})
         }
     }

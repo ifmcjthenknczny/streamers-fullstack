@@ -1,8 +1,13 @@
 @import "../../design/colors.module.scss";
+@import "../../design/devices.module.scss";
 
 .voteBar {
   display: flex;
   align-items: center;
+  @include handheld {
+    width: 100%;
+    justify-content: space-around;
+  }
 }
 
 .button {
@@ -31,4 +36,10 @@
 
 .downvote:hover {
   color: red;
+}
+
+.onlyDesktop {
+  @include handheld {
+    display: none;
+  }
 }

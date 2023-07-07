@@ -15,6 +15,7 @@ import {
 } from '../shared/contract'
 import mongoose, { Connection, Collection } from 'mongoose'
 import 'dotenv/config'
+import { NotFoundError } from './failures'
 
 const app = express()
 app.use(bodyParser.json())
@@ -85,7 +86,7 @@ export const listStreamers = async () =>
 export const findStreamer = async (id: Streamer['id']): Promise<Streamer> => {
     const streamer = await streamersCollection.findOne(toMongoId({ id }))
     if (!streamer) {
-        throw new Error('Streamer not found')
+        throw NotFoundError(id)
     }
     return fromMongoId(streamer)
 }

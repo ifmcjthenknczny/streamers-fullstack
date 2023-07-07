@@ -2,11 +2,10 @@ import React, {useState} from 'react'
 import styles from './StreamerSubmissionForm.module.scss'
 import {type AddStreamerRequest, PLATFORMS, type Platform} from '../../contract'
 import classNames from 'classnames'
-import {query, validateSchema} from '../../helpers'
-import useBusy from '../../hooks/useBusy'
+import {query} from '../../helpers'
+import useQueryStatus from '../../hooks/useQueryStatus'
 import Spinner from '../Spinner/Spinner'
 import Heading from '../Heading/Heading'
-import Joi from 'joi'
 import useListRefresh from '../../hooks/useListRefresh'
 
 const defaultFormData: AddStreamerRequest = {
@@ -15,20 +14,13 @@ const defaultFormData: AddStreamerRequest = {
     description: '',
 }
 
-const schema = Joi.object({
-    name: Joi.string().max(80).required(),
-    platform: Joi.string().valid(...PLATFORMS).required(),
-    description: Joi.string().max(2000),
-})
-
 const StreamerSubmissionForm = () => {
     const [formData, setFormData] = useState(defaultFormData)
-    const [isBusy, busyWrapper] = useBusy(false)
-    const [, setListRefresh] = useListRefresh()
+    const [isBusy, busyWrapper] = useQueryStatus(false)
+    const { setListRefresh } = useListRefresh()
 
     const handleSubmit = busyWrapper(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        validateSchema(formData, schema)
         await query('/streamers', {method: 'POST', body: formData})
         setListRefresh()
     })

@@ -3,7 +3,7 @@ import styles from './StreamersList.module.scss'
 import VoteBar from '../VoteBar/VoteBar'
 import {Link} from 'react-router-dom'
 import {query} from '../../helpers'
-import useBusy from '../../hooks/useBusy'
+import useQueryStatus from '../../hooks/useQueryStatus'
 import Spinner from '../Spinner/Spinner'
 import {BASE_PATHS} from '../../constants'
 import Heading from '../Heading/Heading'
@@ -12,8 +12,8 @@ import {type PublicListStreamer} from '../../contract'
 
 const StreamersList = () => {
     const [streamers, setStreamers] = useState<PublicListStreamer[]>([])
-    const [isBusy, busyWrapper] = useBusy(true)
-    const [needsRefresh, , clearListRefresh] = useListRefresh()
+    const [isBusy, busyWrapper] = useQueryStatus(true)
+    const { needsRefresh, clearListRefresh } = useListRefresh()
 
     useEffect(() => {
         fetchStreamers()

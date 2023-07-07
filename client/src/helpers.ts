@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { SERVER_HOST, SERVER_PREFIX } from './contract'
-import { Schema } from 'joi'
 
 interface RequestOptions<M extends keyof Queries = 'GET'> {
   method?: M;
@@ -46,12 +45,4 @@ export const query = async <
         : await axios({ url, method })
             
     return data
-}
-
-export const validateSchema = <T>(data: T, schema: Schema<T>): T => {
-    const { error, value } = schema.validate(data)
-    if (error) {
-        throw new Error(`Validation error: ${error.message}`)
-    }
-    return value
 }

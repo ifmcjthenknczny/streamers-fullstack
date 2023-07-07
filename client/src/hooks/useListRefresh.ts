@@ -2,13 +2,13 @@ import { useDispatch } from 'react-redux'
 import { clearNeedsRefresh, setNeedsRefresh } from '../redux/slices'
 import useSelector from './useSelector'
 
-const useListRefresh = (): [boolean, () => void, () => void] => {
+const useListRefresh = (): { needsRefresh: boolean, setListRefresh: () => void, clearListRefresh: () => void } => {
     const needsRefresh = useSelector(s => s.listNeedsRefresh)
     const dispatch = useDispatch()
-    const setTrue = () => dispatch(setNeedsRefresh())
-    const setFalse = () => dispatch(clearNeedsRefresh())
+    const setListRefresh = () => dispatch(setNeedsRefresh())
+    const clearListRefresh = () => dispatch(clearNeedsRefresh())
 
-    return [needsRefresh, setTrue, setFalse]
+    return ({ needsRefresh, setListRefresh, clearListRefresh })
 }
 
 export default useListRefresh

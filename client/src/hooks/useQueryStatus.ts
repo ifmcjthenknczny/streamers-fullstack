@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BASE_PATHS } from '../constants'
 
-const useBusy = (
+const useQueryStatus = (
     initialBusyState = false
 ): [boolean, <T extends (...args: any[]) => any>(f: T) => T] => { 
     const navigate = useNavigate()
@@ -26,4 +26,4 @@ const useBusy = (
     return [isBusy, busyWrapper]
 }
 
-export default useBusy
+export default useQueryStatus

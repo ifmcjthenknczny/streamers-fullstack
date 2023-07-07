@@ -1,14 +1,14 @@
 import React from 'react'
-import styles from './GoBackButton.module.scss'
+import styles from './MenuButton.module.scss'
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import { BASE_PATHS } from '../../constants'
 
 type Props = {
-	className?: string;
+    className?: string;
 };
 
-const GoBackButton = ({className}: Props) => {
+const MenuButton = ({ className }: Props) => {
     const navigate = useNavigate()
 
     const handleClick = () => {
@@ -16,8 +16,8 @@ const GoBackButton = ({className}: Props) => {
     }
 
     return <button className={classNames(styles.goBack, className)} onClick={handleClick}>
-        <strong className={styles.text}>Go Back</strong>
+        <strong className={styles.text}>Go to menu</strong>
     </button>
 }
 
-export default GoBackButton
+export default MenuButton
