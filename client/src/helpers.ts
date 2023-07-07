@@ -30,7 +30,6 @@ const injectParamsToUrl = (
             modifiedUrl = `${modifiedUrl}${key}=${value}`
         }
     }
-    console.log(modifiedUrl)
     return modifiedUrl
 }
 

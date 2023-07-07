@@ -16,6 +16,7 @@ import {
 import mongoose, { Connection, Collection } from 'mongoose'
 import 'dotenv/config'
 import { NotFoundError } from './failures'
+import { Paginated } from '../shared/contract'
 
 const app = express()
 app.use(bodyParser.json())
@@ -80,18 +81,31 @@ export const registerStreamerVote = async (payload: VoteRequest) => {
     }
 }
 
-export const listStreamers = async (page: number) => {
+export const listStreamers = async (page: number): Promise<Paginated<Streamer>> => {
     const perPage = 10
     const count = await streamersCollection.countDocuments()
-    const streamers = (
-        await streamersCollection
-            .find()
-            .sort({'name': 1 })
-            .skip((page - 1) * perPage)
-            .limit(perPage)
-            .toArray()
-    ).map(fromMongoId)
-    return { data: streamers, page, perPage, count }
+
+    const pipeline = [
+        {
+            $addFields: {
+                voteDifference: { $subtract: [{ $size: '$upvotedBy' }, { $size: '$downvotedBy' }] },
+                upvotes: { $size: '$upvotedBy' },
+            },
+        },
+        {
+            $sort: {
+                voteDifference: -1,
+                upvoteCount: -1,
+                name: 1,
+            },
+        },
+    ]
+
+    const streamers = await streamersCollection.aggregate(pipeline).skip((page -1) * perPage).limit(perPage).toArray()
+
+    const mappedStreamers = (streamers as (Omit<Streamer, 'id'> & { _id: ObjectId })[]).map((streamer) => fromMongoId(streamer))
+
+    return { data: mappedStreamers, page, perPage, count }
 }
 
 export const findStreamer = async (id: Streamer['id']): Promise<Streamer> => {
