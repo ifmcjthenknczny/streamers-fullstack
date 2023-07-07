@@ -95,7 +95,7 @@ export const listStreamers = async (page: number): Promise<Paginated<Streamer>> 
         {
             $sort: {
                 voteDifference: -1,
-                upvoteCount: -1,
+                upvotes: -1,
                 name: 1,
             },
         },
