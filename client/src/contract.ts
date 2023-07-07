@@ -2,7 +2,10 @@ declare global {
   interface Queries {
     GET: {
       '/streamers': {
-        response: PublicListStreamer[];
+        queryParams: {
+          page: number
+        }
+        response: Paginated<PublicListStreamer>;
       };
       '/streamer/:streamerId': {
         params: {
@@ -75,3 +78,10 @@ export const SERVER_PREFIX = '/api'
 export const SERVER_PORT = 5000
 export const SERVER_HOST = `http://localhost:${SERVER_PORT}`
 // export const CLIENT_HOST = "http://localhost:3000";
+
+export type Paginated<T> = {
+  data: T[]
+  count: number
+  perPage: number
+  page: number
+}

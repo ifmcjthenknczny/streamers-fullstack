@@ -1,12 +1,11 @@
 import { Request, Response } from 'express'
 import { listStreamers } from '../repository'
-import { toPublicListStreamer } from '../helpers'
-import { PublicListStreamer } from '../../shared/contract'
+import { toPublicListStreamer, validateSchema } from '../helpers'
+import { getStreamersSchema } from '../schemas'
 
 export default async (req: Request, res: Response) => {
-    const streamers = await listStreamers()
-    res.json(streamers.map(toPublicListStreamer).sort(sortFunction))
+    const { page } = validateSchema(req.query, getStreamersSchema)
+    const {data, ...rest} = await listStreamers(page)
+    res.json({ data: data.map(toPublicListStreamer), ...rest })
 }
 
-const sortFunction = (a: PublicListStreamer, b: PublicListStreamer) =>
-    b.upvotes - b.downvotes - (a.upvotes - a.downvotes)

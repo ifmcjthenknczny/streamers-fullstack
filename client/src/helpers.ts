@@ -5,6 +5,7 @@ interface RequestOptions<M extends keyof Queries = 'GET'> {
   method?: M;
   params?: Record<string, string>;
   body?: object;
+  queryParams?: Record<string, string | number>;
 }
 
 type QueryResponse<
@@ -14,15 +15,22 @@ type QueryResponse<
 
 const injectParamsToUrl = (
     url: string,
-    params?: Record<string, string>
+    params?: Record<string, string>,
+    queryParams?: Record<string, string | number>
 ): string => {
-    if (params == null) {
-        return url
-    }
     let modifiedUrl = url
-    for (const [key, value] of Object.entries(params)) {
-        modifiedUrl = modifiedUrl.replace(`:${key}`, value)
+    if (params) {
+        for (const [key, value] of Object.entries(params)) {
+            modifiedUrl = modifiedUrl.replace(`:${key}`, value)
+        }
     }
+    if (queryParams) {
+        modifiedUrl = `${modifiedUrl}?`
+        for (const [key, value] of Object.entries(queryParams)) {
+            modifiedUrl = `${modifiedUrl}${key}=${value}`
+        }
+    }
+    console.log(modifiedUrl)
     return modifiedUrl
 }
 
@@ -37,12 +45,11 @@ export const query = async <
 
     const url = `${SERVER_HOST}${SERVER_PREFIX}${injectParamsToUrl(
         String(relativeUrl),
-        options.params
+        options.params,
+        options.queryParams
     )}`
 
-    const { data } = ['POST', 'PUT'].includes(method)
-        ? await axios({ url, method, data: body })
-        : await axios({ url, method })
-            
+    const { data } = method === 'GET' ? await axios({ url, method }) :
+        await axios({ url, method, data: body })
     return data
 }

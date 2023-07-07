@@ -24,3 +24,7 @@ export const voteRequestSchema = Joi.object({
 export const idParamsSchema = Joi.object({
     streamerId: idSchema.required(),
 })
+
+export const getStreamersSchema = Joi.object({
+    page: Joi.number().integer().default(1)
+})

@@ -1,0 +1,32 @@
+@import '../../design/colors.module.scss';
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.page {
+  cursor: pointer;
+  padding: 0.5rem;
+  border: 2px solid $border-color;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  background-color: $middle-gray;
+  color: $text-color;
+  font-weight: 700;
+
+  &:hover {
+    background-color: lighten($middle-gray, 15%);
+  }
+}
+
+.active {
+  color: $border-color;
+    background-color: $active-color;
+
+    &:hover {
+        background-color: lighten($active-color, 15%);
+    }
+}

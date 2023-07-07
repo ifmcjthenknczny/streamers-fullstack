@@ -80,8 +80,19 @@ export const registerStreamerVote = async (payload: VoteRequest) => {
     }
 }
 
-export const listStreamers = async () =>
-    (await streamersCollection.find().toArray()).map(fromMongoId)
+export const listStreamers = async (page: number) => {
+    const perPage = 10
+    const count = await streamersCollection.countDocuments()
+    const streamers = (
+        await streamersCollection
+            .find()
+            .sort({'name': 1 })
+            .skip((page - 1) * perPage)
+            .limit(perPage)
+            .toArray()
+    ).map(fromMongoId)
+    return { data: streamers, page, perPage, count }
+}
 
 export const findStreamer = async (id: Streamer['id']): Promise<Streamer> => {
     const streamer = await streamersCollection.findOne(toMongoId({ id }))
